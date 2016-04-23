@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Artsmart" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="ArtsmartContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Artsmart.Address" />
+    <EntitySet Name="Categories" EntityType="Artsmart.Category" />
+    <EntitySet Name="Customers" EntityType="Artsmart.Customer" />
+    <EntitySet Name="Products" EntityType="Artsmart.Product" />
+    <EntitySet Name="Resolutions" EntityType="Artsmart.Resolution" />
+    <AssociationSet Name="FK_Customer_Address" Association="Artsmart.FK_Customer_Address">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Category" Association="Artsmart.FK_Product_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Resolution" Association="Artsmart.FK_Product_Resolution">
+      <End Role="Resolution" EntitySet="Resolutions" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <EntitySet Name="Carts" EntityType="Artsmart.Cart" />
+    <AssociationSet Name="FK_Cart_Customer" Association="Artsmart.FK_Cart_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <EntitySet Name="CartItems" EntityType="Artsmart.CartItem" />
+    <AssociationSet Name="FK_CartItem_Cart" Association="Artsmart.FK_CartItem_Cart">
+      <End Role="Cart" EntitySet="Carts" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartItem_Product" Association="Artsmart.FK_CartItem_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers" Relationship="Artsmart.FK_Customer_Address" FromRole="Address" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="Artsmart.FK_Product_Category" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="AddressId" Type="Int32" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Address" Relationship="Artsmart.FK_Customer_Address" FromRole="Customer" ToRole="Address" />
+    <NavigationProperty Name="Carts" Relationship="Artsmart.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Brand" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="WorkingArea" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ResolutionId" Type="Int32" />
+    <Property Name="Sensitivity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Material" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="ProductSpecId" Type="Int32" />
+    <Property Name="Word1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Category" Relationship="Artsmart.FK_Product_Category" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="Resolution" Relationship="Artsmart.FK_Product_Resolution" FromRole="Product" ToRole="Resolution" />
+    <NavigationProperty Name="CartItems" Relationship="Artsmart.FK_CartItem_Product" FromRole="Product" ToRole="CartItem" />
+  </EntityType>
+  <EntityType Name="Resolution">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Measurement" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Size" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="Artsmart.FK_Product_Resolution" FromRole="Resolution" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_Customer_Address">
+    <End Type="Artsmart.Address" Role="Address" Multiplicity="0..1" />
+    <End Type="Artsmart.Customer" Role="Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Category">
+    <End Type="Artsmart.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="Artsmart.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Resolution">
+    <End Type="Artsmart.Resolution" Role="Resolution" Multiplicity="0..1" />
+    <End Type="Artsmart.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resolution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ResolutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="Artsmart.FK_Cart_Customer" FromRole="Cart" ToRole="Customer" />
+    <NavigationProperty Name="CartItems" Relationship="Artsmart.FK_CartItem_Cart" FromRole="Cart" ToRole="CartItem" />
+  </EntityType>
+  <Association Name="FK_Cart_Customer">
+    <End Type="Artsmart.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="Artsmart.Cart" Role="Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CartItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CartId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cart" Relationship="Artsmart.FK_CartItem_Cart" FromRole="CartItem" ToRole="Cart" />
+    <NavigationProperty Name="Product" Relationship="Artsmart.FK_CartItem_Product" FromRole="CartItem" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_CartItem_Cart">
+    <End Type="Artsmart.Cart" Role="Cart" Multiplicity="1" />
+    <End Type="Artsmart.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cart">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="CartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartItem_Product">
+    <End Type="Artsmart.Product" Role="Product" Multiplicity="1" />
+    <End Type="Artsmart.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

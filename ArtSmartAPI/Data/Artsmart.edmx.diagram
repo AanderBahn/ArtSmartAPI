@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b8e7973a7dba47329e3a0410e51e013f" Name="Diagram1" ZoomLevel="80" >
+        <EntityTypeShape EntityType="Artsmart.Address" Width="1.5" PointX="5.125" PointY="0.75" />
+        <EntityTypeShape EntityType="Artsmart.Category" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="Artsmart.Customer" Width="1.5" PointX="7.75" PointY="0.625" />
+        <EntityTypeShape EntityType="Artsmart.Product" Width="1.5" PointX="3" PointY="2.625" />
+        <EntityTypeShape EntityType="Artsmart.Resolution" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="Artsmart.FK_Customer_Address" />
+        <AssociationConnector Association="Artsmart.FK_Product_Category" />
+        <AssociationConnector Association="Artsmart.FK_Product_Resolution" />
+        <EntityTypeShape EntityType="Artsmart.Cart" Width="1.5" PointX="10" PointY="1" />
+        <AssociationConnector Association="Artsmart.FK_Cart_Customer" />
+        <EntityTypeShape EntityType="Artsmart.CartItem" Width="1.5" PointX="12.25" PointY="2.875" />
+        <AssociationConnector Association="Artsmart.FK_CartItem_Cart" />
+        <AssociationConnector Association="Artsmart.FK_CartItem_Product" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
